@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カラフルチャット</title>
+</head>
+<body>
+    <h1>カラフルチャット</h1>
+    <p>あなたのお名前: <span id="username"></span></p>
+    <form id="messageForm">
+        メッセージ: <input type="text" id="message" name="text" size="50" required>
+        <button type="submit">送信</button>
+    </form>
+    <h2>タイムライン</h2>
+    <ul id="timeline">
+        <!-- メッセージがここに追加されます -->
+    </ul>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        document.getElementById('username').textContent = name;
+
+        const ws = new WebSocket('ws://road-data-n-stuff.github.io:8080');
+
+        ws.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        ws.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            console.log('Received message:', message); // デバッグ用ログ
+            const timeline = document.getElementById('timeline');
+            const listItem = document.createElement('li');
+            listItem.textContent = `${message.name}: ${message.text} (${message.timestamp})`;
+            timeline.insertBefore(listItem, timeline.firstChild); // 新しいメッセージを先頭に追加
+        };
+
+        ws.onerror = function(error) {
+            console.error('WebSocket Error: ', error);
+        };
+
+        ws.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+            console.log('Sending message:', message); // デバッグ用ログ
+            if (message) {
+                const timestamp = new Date().toLocaleString();
+                const payload = JSON.stringify({ type: 'message', name: name, text: message, timestamp: timestamp });
+                console.log('Payload:', payload); // デバッグ用ログ
+                ws.send(payload);
+                document.getElementById('message').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
