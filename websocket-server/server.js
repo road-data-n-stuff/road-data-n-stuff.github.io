@@ -1,10 +1,15 @@
-const http = require('http');
-const WebSocket = require('ws');
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
+const WebSocket = require('ws');
 const path = require('path');
 
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer({
+    cert: fs.readFileSync('/path/to/your/cert.pem'),
+    key: fs.readFileSync('/path/to/your/key.pem')
+}, app);
+
 const wss = new WebSocket.Server({ server });
 const messages = []; // メッセージを保存する配列
 
@@ -41,9 +46,9 @@ wss.on('connection', (ws) => {
     });
 });
 
-const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// サーバーを起動
+server.listen(8080, () => {
+    console.log('Server is listening on port 8080');
 });
 
 <script>
