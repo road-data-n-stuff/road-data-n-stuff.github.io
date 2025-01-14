@@ -21,7 +21,7 @@
         const name = urlParams.get('name');
         document.getElementById('username').textContent = name;
 
-        const ws = new WebSocket('ws://road-data-n-stuff.github.io:8080');
+        const ws = new WebSocket('wss://road-data-n-stuff.github.io:8080'); // wssに変更
 
         ws.onopen = function() {
             console.log('WebSocket connection established');
@@ -29,15 +29,13 @@
 
         ws.onmessage = function(event) {
             const message = JSON.parse(event.data);
-            console.log('Received message:', message); // デバッグ用ログ
-            const timeline = document.getElementById('timeline');
-            const listItem = document.createElement('li');
-            listItem.textContent = `${message.name}: ${message.text} (${message.timestamp})`;
-            timeline.insertBefore(listItem, timeline.firstChild); // 新しいメッセージを先頭に追加
+            const li = document.createElement('li');
+            li.textContent = `${message.name}: ${message.text}`;
+            document.getElementById('timeline').appendChild(li);
         };
 
         ws.onerror = function(error) {
-            console.error('WebSocket Error: ', error);
+            console.error('WebSocket error:', error);
         };
 
         ws.onclose = function() {
@@ -46,15 +44,13 @@
 
         document.getElementById('messageForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const message = document.getElementById('message').value;
-            console.log('Sending message:', message); // デバッグ用ログ
-            if (message) {
-                const timestamp = new Date().toLocaleString();
-                const payload = JSON.stringify({ type: 'message', name: name, text: message, timestamp: timestamp });
-                console.log('Payload:', payload); // デバッグ用ログ
-                ws.send(payload);
-                document.getElementById('message').value = '';
-            }
+            const messageInput = document.getElementById('message');
+            const message = {
+                name: name,
+                text: messageInput.value
+            };
+            ws.send(JSON.stringify(message));
+            messageInput.value = '';
         });
     </script>
 </body>
