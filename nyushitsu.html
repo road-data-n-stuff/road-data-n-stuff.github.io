@@ -22,21 +22,20 @@
             const name = document.getElementById('name').value;
             if (name) {
                 console.log('Name entered:', name); // デバッグ用ログ
-                const ws = new WebSocket('ws://road-data-n-stuff.github.io:8080');
+                const ws = new WebSocket('wss://road-data-n-stuff.github.io:8080'); // wssに変更
                 ws.onopen = function() {
                     console.log('WebSocket connection established');
                     ws.send(JSON.stringify({ type: 'join', name: name }));
                     window.location.href = `chat.html?name=${encodeURIComponent(name)}`; // チャットページにリダイレクト
                 };
                 ws.onerror = function(error) {
-                    console.error('WebSocket Error: ', error);
-                    console.error('WebSocket Error Event: ', error);
+                    console.error('WebSocket error:', error);
                 };
                 ws.onclose = function() {
                     console.log('WebSocket connection closed');
                 };
             } else {
-                console.log('Name is required');
+                alert('名前を入力してください');
             }
         });
     </script>
