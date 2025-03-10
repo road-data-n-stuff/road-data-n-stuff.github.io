@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>献立作成ツール</title>
+</head>
+<body>
+    <h1>献立作成ツール</h1>
+    <form id="menuForm">
+        <label for="days">日数:</label>
+        <input type="number" id="days" value="7"><br><br>
+        <p>重視するポイント:</p>
+        <input type="checkbox" id="budget" name="points" value="budget">
+        <label for="budget">予算</label><br>
+        <input type="checkbox" id="health" name="points" value="health">
+        <label for="health">健康</label><br>
+        <input type="checkbox" id="time" name="points" value="time">
+        <label for="time">時間</label><br><br>
+        <button type="button" onclick="generateMenu()">献立を生成</button>
+    </form>
+    <div id="menuResult"></div>
+
+    <script>
+        async function generateMenu() {
+            const days = document.getElementById('days').value;
+            const points = Array.from(document.querySelectorAll('input[name="points"]:checked')).map(el => el.value);
+            const menuResultDiv = document.getElementById("menuResult");
+            menuResultDiv.innerHTML = "献立生成中...";
+
+            try {
+                const generatedMenu = await getGeminiMenu(days, points);
+                menuResultDiv.innerHTML = generatedMenu;
+            } catch (error) {
+                console.error("献立生成エラー:", error);
+                menuResultDiv.innerHTML = "<p>献立生成中にエラーが発生しました。</p>";
+            }
+        }
+
+        async function getGeminiMenu(days, points) {
+          //Gemini API連携部分
+          const apiKey = "AIzaSyAAXdeQcdctXvOUZUPPkh4KBvQ--vg3FUs"; //ここにAPIキーを設定してください
+          const model = "gemini";
+          const prompt = createPrompt(days, points);
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+          const response = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                  contents: [{ parts: [{ text: prompt }] }],
+              }),
+          });
+          const data = await response.json();
+
+          if (data && data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+              return data.candidates[0].content.parts[0].text;
+          } else {
+              throw new Error("Gemini APIからの応答が不正です。");
+          }
+        }
+
+        function createPrompt(days, points) {
+          let prompt = `${days}日分の献立を作成してください。`;
+          if (points.length > 0) {
+              prompt += `重視するポイントは${points.join("、")}です。`;
+          }
+          prompt += "献立はHTML形式で出力してください。";
+          return prompt;
+        }
+    </script>
+</body>
+</html>
