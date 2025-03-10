@@ -40,9 +40,9 @@
         async function getGeminiMenu(days, points) {
           //Gemini API連携部分
           const apiKey = "AIzaSyAAXdeQcdctXvOUZUPPkh4KBvQ--vg3FUs"; //ここにAPIキーを設定してください
-          const model = "gemini";
+          const model = "gemini-pro";
           const prompt = createPrompt(days, points);
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyAAXdeQcdctXvOUZUPPkh4KBvQ--vg3FUs`;
 
           const response = await fetch(url, {
               method: "POST",
