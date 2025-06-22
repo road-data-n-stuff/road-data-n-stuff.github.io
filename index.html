@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ネタメックス！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "MS UI Gothic", "Meiryo UI", sans-serif;
+            font-size: 12px;
+            background: #ffffff;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(to bottom, #6666cc 0%, #4444aa 100%);
+            padding: 8px 0;
+            border-bottom: 1px solid #333399;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            margin-right: 20px;
+        }
+        
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 4px 60px 4px 8px;
+            border: 1px solid #cccccc;
+            font-size: 12px;
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            bottom: 2px;
+            width: 50px;
+            background: linear-gradient(to bottom, #ff6666 0%, #cc4444 100%);
+            border: 1px solid #cc4444;
+            color: white;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .user-menu {
+            margin-left: 20px;
+            color: white;
+            font-size: 11px;
+        }
+        
+        .user-menu a {
+            color: #ccddff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        
+        .nav-bar {
+            background: #f8f8f8;
+            border-bottom: 1px solid #cccccc;
+            padding: 5px 0;
+        }
+        
+        .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 11px;
+            padding: 2px 4px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: #ffffff;
+        }
+        
+        .left-column {
+            width: 200px;
+        }
+        
+        .center-column {
+            flex: 1;
+        }
+        
+        .right-column {
+            width: 300px;
+        }
+        
+        .section {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            margin-bottom: 10px;
+        }
+        
+        .section-header {
+            background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 100%);
+            border-bottom: 1px solid #cccccc;
+            padding: 5px 8px;
+            font-weight: bold;
+            font-size: 11px;
+            color: #333;
+        }
+        
+        .section-content {
+            padding: 8px;
+        }
+        
+        .news-item {
+            padding: 3px 0;
+            border-bottom: 1px dotted #cccccc;
+            font-size: 11px;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-item a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .news-time {
+            color: #666;
+            font-size: 10px;
+        }
+        
+        .banner-ad {
+            background: linear-gradient(45deg, #ff6666, #ffaa66);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border: 2px solid #ff4444;
+        }
+        
+        .service-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            font-size: 11px;
+        }
+        
+        .service-links a {
+            color: #0066cc;
+            text-decoration: none;
+            padding: 2px;
+        }
+        
+        .service-links a:hover {
+            background: #f0f8ff;
+        }
+        
+        .weather-widget {
+            background: #e6f3ff;
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+        }
+        
+        .stock-info {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .ranking {
+            font-size: 11px;
+        }
+        
+        .ranking ol {
+            padding-left: 20px;
+        }
+        
+        .ranking li {
+            padding: 2px 0;
+        }
+        
+        .ranking a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        .footer {
+            background: #f8f8f8;
+            border-top: 1px solid #cccccc;
+            padding: 10px 0;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">ネタメックス！</div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="キーワードを入力">
+                <button class="search-btn">検索</button>
+            </div>
+            <div class="user-menu">
+                <a href="#">ログイン</a> |
+                <a href="#">新規登録</a> |
+                <a href="#">ヘルプ</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nav-bar">
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="#">トップ</a>
+                <a href="#">ニュース</a>
+                <a href="#">メール</a>
+                <a href="#">オークション</a>
+                <a href="#">ショッピング</a>
+                <a href="#">地図</a>
+                <a href="#">路線情報</a>
+                <a href="#">天気</a>
+                <a href="#">テレビ</a>
+                <a href="#">グルメ</a>
+                <a href="#">ブログ</a>
+                <a href="#">掲示板</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="left-column">
+            <div class="section">
+                <div class="section-header">サービス一覧</div>
+                <div class="section-content">
+                    <div class="service-links">
+                        <a href="#">メール</a>
+                        <a href="#">カレンダー</a>
+                        <a href="#">住所録</a>
+                        <a href="#">オークション</a>
+                        <a href="#">ショッピング</a>
+                        <a href="#">旅行</a>
+                        <a href="#">不動産</a>
+                        <a href="#">自動車</a>
+                        <a href="#">求人</a>
+                        <a href="#">恋愛</a>
+                        <a href="#">ゲーム</a>
+                        <a href="#">占い</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">天気予報</div>
+                <div class="section-content">
+                    <div class="weather-widget">
+                        <div><strong>東京</strong></div>
+                        <div>☀️ 晴れ</div>
+                        <div>最高 25℃ / 最低 18℃</div>
+                        <div style="margin-top: 5px; font-size: 10px;">
+                            降水確率: 10%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">株価情報</div>
+                <div class="section-content stock-info">
+                    <div>日経平均: 10,546.44 <span style="color: red;">▼-125.23</span></div>
+                    <div>TOPIX: 956.78 <span style="color: red;">▼-8.45</span></div>
+                    <div>ドル/円: 90.25 <span style="color: green;">▲+0.15</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="center-column">
+            <div class="banner-ad blink">
+                🎉 超お得セール開催中！ 今すぐクリック！ 🎉
+            </div>
+            
+            <div class="section">
+                <div class="section-header">🔥 主要ニュース</div>
+                <div class="section-content">
+                    <div class="news-item">
+                        <a href="#">新型インフルエンザ対策、政府が緊急会議を開催</a>
+                        <div class="news-time">12月15日 14:32</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">民主党政権、子ども手当の詳細を発表</a>
+                        <div class="news-time">12月15日 13:45</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">トヨタ、ハイブリッド車の新モデルを発表</a>
+                        <div class="news-time">12月15日 12:20</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">年末年始の交通渋滞予測、高速道路各社が発表</a>
+                        <div class="news-time">12月15日 11:15</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">iPhone 3GS、日本での売れ行き好調</a>
+                        <div class="news-time">12月15日 10:30</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">💻 IT・テクノロジー</div>
+                <div class="section-content">
+                    <div class="news-item">
+                        <a href="#">Windows 7、発売から2ヶ月で好調な売れ行き</a>
+                        <div class="news-time">12月15日 09:45</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">Google、新しい検索アルゴリズムを導入</a>
+                        <div class="news-time">12月14日 18:22</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">Twitter、日本語版サービスを正式開始</a>
+                        <div class="news-time">12月14日 16:10</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">🎬 エンタメ</div>
+                <div class="section-content">
+                    <div class="news-item">
+                        <a href="#">映画「アバター」、3D映画の新時代を切り開く</a>
+                        <div class="news-time">12月15日 08:30</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">嵐、紅白歌合戦での特別企画が決定</a>
+                        <div class="news-time">12月14日 20:15</div>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">AKB48、新メンバーオーディション開催を発表</a>
+                        <div class="news-time">12月14日 19:45</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-column">
+            <div class="banner-ad" style="background: linear-gradient(45deg, #66cc66, #44aa44); font-size: 12px;">
+                📱 最新ケータイ情報<br>
+                <span style="font-size: 10px;">au・docomo・SoftBank</span>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">🏆 検索ランキング</div>
+                <div class="section-content ranking">
+                    <ol>
+                        <li><a href="#">年賀状</a></li>
+                        <li><a href="#">クリスマス</a></li>
+                        <li><a href="#">インフルエンザ</a></li>
+                        <li><a href="#">iPhone</a></li>
+                        <li><a href="#">民主党</a></li>
+                        <li><a href="#">Windows 7</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">mixi</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">ニコニコ動画</a></li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">📺 テレビ番組</div>
+                <div class="section-content">
+                    <div class="news-item">
+                        <strong>19:00</strong> <a href="#">ニュース7</a> (NHK)
+                    </div>
+                    <div class="news-item">
+                        <strong>19:30</strong> <a href="#">クローズアップ現代</a> (NHK)
+                    </div>
+                    <div class="news-item">
+                        <strong>20:00</strong> <a href="#">ためしてガッテン</a> (NHK)
+                    </div>
+                    <div class="news-item">
+                        <strong>21:00</strong> <a href="#">相棒</a> (テレビ朝日)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">🛍️ ショッピング</div>
+                <div class="section-content">
+                    <div class="news-item">
+                        <a href="#">年末セール開催中！最大70%OFF</a>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">おせち料理予約受付中</a>
+                    </div>
+                    <div class="news-item">
+                        <a href="#">冬物コート特集</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="banner-ad" style="background: linear-gradient(45deg, #ff9966, #ff6633); font-size: 11px;">
+                🎮 オンラインゲーム<br>
+                無料で遊べる！
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div>Copyright (C) 2009 ネタメックス！ All Rights Reserved.</div>
+        <div style="margin-top: 5px;">
+            <a href="#" style="color: #666; text-decoration: none;">利用規約</a> |
+            <a href="#" style="color: #666; text-decoration: none;">プライバシーポリシー</a> |
+            <a href="#" style="color: #666; text-decoration: none;">ヘルプ</a> |
+            <a href="#" style="color: #666; text-decoration: none;">お問い合わせ</a>
+        </div>
+    </div>
+    
+    <script>
+        let currentPage = 'top';
+        
+        // ページコンテンツの定義
+        const pageContents = {
+            top: document.querySelector('.main-container').innerHTML,
+            news: `
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-header">ニュースカテゴリ</div>
+                        <div class="section-content">
+                            <div class="service-links">
+                                <a href="#" onclick="showPage('politics')">政治</a>
+                                <a href="#" onclick="showPage('economy')">経済</a>
+                                <a href="#" onclick="showPage('society')">社会</a>
+                                <a href="#" onclick="showPage('international')">国際</a>
+                                <a href="#" onclick="showPage('sports')">スポーツ</a>
+                                <a href="#" onclick="showPage('entertainment')">芸能</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="center-column">
+                    <div class="section">
+                        <div class="section-header">📰 最新ニュース一覧</div>
+                        <div class="section-content">
+                            <div class="news-item">
+                                <h3 style="margin-bottom: 5px;"><a href="#" onclick="showArticle('news1')">民主党、子ども手当の支給額を月額26,000円に決定</a></h3>
+                                <p style="font-size: 11px; color: #666; margin-bottom: 5px;">2009年12月15日 15:30 - 政治部</p>
+                                <p style="font-size: 11px;">政府は15日、子ども手当の支給額を月額26,000円とすることを正式に決定した。来年4月から支給を開始する予定...</p>
+                            </div>
+                            <div class="news-item">
+                                <h3 style="margin-bottom: 5px;"><a href="#" onclick="showArticle('news2')">新型インフルエンザワクチン、優先接種の対象を拡大</a></h3>
+                                <p style="font-size: 11px; color: #666; margin-bottom: 5px;">2009年12月15日 14:15 - 社会部</p>
+                                <p style="font-size: 11px;">厚生労働省は、新型インフルエンザワクチンの優先接種対象を拡大すると発表。基礎疾患のない高校生も対象に...</p>
+                            </div>
+                            <div class="news-item">
+                                <h3 style="margin-bottom: 5px;"><a href="#" onclick="showArticle('news3')">トヨタ、新型プリウス月間販売目標の3倍を達成</a></h3>
+                                <p style="font-size: 11px; color: #666; margin-bottom: 5px;">2009年12月15日 13:45 - 経済部</p>
+                                <p style="font-size: 11px;">トヨタ自動車の新型プリウスが、11月の月間販売で目標の3倍となる3万台を突破。エコカー減税の効果が...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-header">注目記事</div>
+                        <div class="section-content">
+                            <div class="news-item"><a href="#" onclick="showArticle('hot1')">年末年始の旅行予約が過去最高に</a></div>
+                            <div class="news-item"><a href="#" onclick="showArticle('hot2')">iPhone 3GS、年末商戦で品薄状態</a></div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            mail: `
+                <div class="center-column" style="width: 100%;">
+                    <div class="section">
+                        <div class="section-header">📧 ネタメックス！メール</div>
+                        <div class="section-content">
+                            <div style="text-align: center; padding: 20px;">
+                                <h2>メールサービス</h2>
+                                <p style="margin: 10px 0;">無料で使える高機能メールサービス</p>
+                                <div style="margin: 20px 0;">
+                                    <input type="text" placeholder="メールアドレス" style="margin: 5px; padding: 5px; width: 200px;">
+                                    <br>
+                                    <input type="password" placeholder="パスワード" style="margin: 5px; padding: 5px; width: 200px;">
+                                    <br>
+                                    <button style="margin: 10px; padding: 8px 20px; background: #0066cc; color: white; border: none; cursor: pointer;">ログイン</button>
+                                </div>
+                                <p><a href="#" onclick="alert('新規登録画面です')">新規登録はこちら</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            auction: `
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-header">カテゴリ</div>
+                        <div class="section-content">
+                            <div class="service-links">
+                                <a href="#">コンピュータ</a>
+                                <a href="#">家電・AV機器</a>
+                                <a href="#">自動車・バイク</a>
+                                <a href="#">ファッション</a>
+                                <a href="#">アクセサリー</a>
+                                <a href="#">食品・飲料</a>
+                                <a href="#">住まい・インテリア</a>
+                                <a href="#">本・雑誌</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="center-column">
+                    <div class="section">
+                        <div class="section-header">🔨 注目のオークション</div>
+                        <div class="section-content">
+                            <div class="news-item">
+                                <strong>iPhone 3GS 32GB 未開封</strong><br>
+                                <span style="color: red; font-weight: bold;">現在価格: 45,000円</span><br>
+                                <span style="font-size: 10px;">残り時間: 2日3時間</span>
+                            </div>
+                            <div class="news-item">
+                                <strong>Nintendo DSi LL 新品同様</strong><br>
+                                <span style="color: red; font-weight: bold;">現在価格: 12,500円</span><br>
+                                <span style="font-size: 10px;">残り時間: 1日5時間</span>
+                            </div>
+                            <div class="news-item">
+                                <strong>Windows 7 Professional パッケージ版</strong><br>
+                                <span style="color: red; font-weight: bold;">現在価格: 18,000円</span><br>
+                                <span style="font-size: 10px;">残り時間: 12時間</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-header">出品・入札</div>
+                        <div class="section-content">
+                            <button style="width: 100%; margin: 5px 0; padding: 8px; background: #ff6666; color: white; border: none; cursor: pointer;">商品を出品する</button>
+                            <button style="width: 100%; margin: 5px 0; padding: 8px; background: #66cc66; color: white; border: none; cursor: pointer;">ウォッチリスト</button>
+                        </div>
+                    </div>
+                </div>
+            `,
+            weather: `
+                <div class="center-column" style="width: 100%;">
+                    <div class="section">
+                        <div class="section-header">🌤️ 天気予報</div>
+                        <div class="section-content">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                                <div style="text-align: center; padding: 10px; background: #f0f8ff; border: 1px solid #ccc;">
+                                    <h3>東京</h3>
+                                    <div style="font-size: 24px;">☀️</div>
+                                    <div>晴れ</div>
+                                    <div>25°C / 18°C</div>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: #f0f8ff; border: 1px solid #ccc;">
+                                    <h3>大阪</h3>
+                                    <div style="font-size: 24px;">⛅</div>
+                                    <div>曇り</div>
+                                    <div>23°C / 16°C</div>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: #f0f8ff; border: 1px solid #ccc;">
+                                    <h3>名古屋</h3>
+                                    <div style="font-size: 24px;">🌧️</div>
+                                    <div>雨</div>
+                                    <div>20°C / 15°C</div>
+                                </div>
+                            </div>
+                            <div style="background: #fffacd; padding: 15px; border: 1px solid #ddd;">
+                                <h4>週間予報（東京）</h4>
+                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px;">
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>今日</div>
+                                        <div>☀️</div>
+                                        <div>25/18</div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>明日</div>
+                                        <div>⛅</div>
+                                        <div>22/16</div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>17日</div>
+                                        <div>🌧️</div>
+                                        <div>19/14</div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>18日</div>
+                                        <div>☀️</div>
+                                        <div>24/17</div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>19日</div>
+                                        <div>☀️</div>
+                                        <div>26/19</div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>20日</div>
+                                        <div>⛅</div>
+                                        <div>21/15</div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 11px;">
+                                        <div>21日</div>
+                                        <div>❄️</div>
+                                        <div>15/8</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            games: `
+                <div class="center-column" style="width: 100%;">
+                    <div class="section">
+                        <div class="section-header">🎮 ネタメックス！ゲーム</div>
+                        <div class="section-content">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                                <div style="border: 1px solid #ccc; padding: 10px; text-align: center;">
+                                    <h4>パズルゲーム</h4>
+                                    <div style="background: #ff9999; width: 80px; height: 80px; margin: 10px auto; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="alert('パズルゲーム開始！')">
+                                        🧩
+                                    </div>
+                                    <button onclick="alert('パズルゲーム開始！')" style="padding: 5px 15px; background: #0066cc; color: white; border: none; cursor: pointer;">プレイ</button>
+                                </div>
+                                <div style="border: 1px solid #ccc; padding: 10px; text-align: center;">
+                                    <h4>RPG冒険</h4>
+                                    <div style="background: #99ff99; width: 80px; height: 80px; margin: 10px auto; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="alert('RPG開始！')">
+                                        ⚔️
+                                    </div>
+                                    <button onclick="alert('RPG開始！')" style="padding: 5px 15px; background: #0066cc; color: white; border: none; cursor: pointer;">プレイ</button>
+                                </div>
+                                <div style="border: 1px solid #ccc; padding: 10px; text-align: center;">
+                                    <h4>カードゲーム</h4>
+                                    <div style="background: #9999ff; width: 80px; height: 80px; margin: 10px auto; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="alert('カードゲーム開始！')">
+                                        🃏
+                                    </div>
+                                    <button onclick="alert('カードゲーム開始！')" style="padding: 5px 15px; background: #0066cc; color: white; border: none; cursor: pointer;">プレイ</button>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px; background: #f0f0f0; padding: 15px;">
+                                <h4>🏆 今週のランキング</h4>
+                                <ol style="margin-top: 10px;">
+                                    <li>プレイヤー123 - 98,500点</li>
+                                    <li>ゲーマーABC - 87,200点</li>
+                                    <li>パズル王 - 76,800点</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+        
+        // ページ表示関数
+        function showPage(pageName) {
+            currentPage = pageName;
+            const mainContainer = document.querySelector('.main-container');
+            
+            if (pageContents[pageName]) {
+                mainContainer.innerHTML = pageContents[pageName];
+            } else {
+                mainContainer.innerHTML = `
+                    <div class="center-column" style="width: 100%;">
+                        <div class="section">
+                            <div class="section-header">${pageName}</div>
+                            <div class="section-content">
+                                <div style="text-align: center; padding: 50px;">
+                                    <h2>${pageName}のページ</h2>
+                                    <p>このページは準備中です。</p>
+                                    <button onclick="showPage('top')" style="margin-top: 20px; padding: 10px 20px; background: #0066cc; color: white; border: none; cursor: pointer;">トップページに戻る</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // 記事表示関数
+        function showArticle(articleId) {
+            const articles = {
+                news1: {
+                    title: "民主党、子ども手当の支給額を月額26,000円に決定",
+                    content: "政府は15日、子ども手当の支給額を月額26,000円とすることを正式に決定した。来年4月から支給を開始する予定で、0歳から中学校修了まで対象となる。\n\n鳩山首相は記者会見で「子育て支援の柱として、家計の負担軽減を図りたい」と述べた。財源については、児童手当の廃止や扶養控除の見直しなどで対応するとしている。\n\n野党側は「財源が不透明」として批判を強めており、来年の通常国会での審議が注目される。"
+                },
+                news2: {
+                    title: "新型インフルエンザワクチン、優先接種の対象を拡大",
+                    content: "厚生労働省は、新型インフルエンザワクチンの優先接種対象を拡大すると発表した。基礎疾患のない高校生も対象に含め、来月から接種を開始する。\n\nこれまでは医療従事者、妊婦、基礎疾患のある人などに限定されていたが、ワクチンの確保が進んだことから対象を広げる。\n\n接種は原則として予約制で、各自治体で受付を行う。接種費用は3,600円で、低所得者は免除される。"
+                }
+            };
+            
+            const article = articles[articleId];
+            if (article) {
+                document.querySelector('.main-container').innerHTML = `
+                    <div class="center-column" style="width: 100%;">
+                        <div class="section">
+                            <div class="section-header">📰 ニュース記事</div>
+                            <div class="section-content">
+                                <h2 style="margin-bottom: 10px; color: #0066cc;">${article.title}</h2>
+                                <p style="font-size: 11px; color: #666; margin-bottom: 20px;">2009年12月15日 15:30 配信</p>
+                                <div style="line-height: 1.6; white-space: pre-line;">${article.content}</div>
+                                <div style="margin-top: 30px; text-align: center;">
+                                    <button onclick="showPage('news')" style="padding: 10px 20px; background: #0066cc; color: white; border: none; cursor: pointer; margin-right: 10px;">ニュース一覧に戻る</button>
+                                    <button onclick="showPage('top')" style="padding: 10px 20px; background: #666; color: white; border: none; cursor: pointer;">トップページ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // 検索機能
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const query = document.querySelector('.search-input').value;
+            if (query) {
+                document.querySelector('.main-container').innerHTML = `
+                    <div class="center-column" style="width: 100%;">
+                        <div class="section">
+                            <div class="section-header">🔍 検索結果</div>
+                            <div class="section-content">
+                                <h3>「${query}」の検索結果</h3>
+                                <div style="margin: 20px 0;">
+                                    <div class="news-item">
+                                        <a href="#" onclick="showArticle('news1')">${query}に関するニュース記事1</a>
+                                        <div class="news-time">2009年12月15日</div>
+                                    </div>
+                                    <div class="news-item">
+                                        <a href="#" onclick="showArticle('news2')">${query}についての最新情報</a>
+                                        <div class="news-time">2009年12月14日</div>
+                                    </div>
+                                    <div class="news-item">
+                                        <a href="#">${query}の詳細解説ページ</a>
+                                        <div class="news-time">2009年12月13日</div>
+                                    </div>
+                                </div>
+                                <button onclick="showPage('top')" style="padding: 10px 20px; background: #0066cc; color: white; border: none; cursor: pointer;">トップページに戻る</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                alert('検索キーワードを入力してください');
+            }
+        });
+        
+        // エンターキーでの検索
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-btn').click();
+            }
+        });
+        
+        // ナビゲーションリンクの設定
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                const href = e.target.getAttribute('href');
+                const text = e.target.textContent.toLowerCase();
+                
+                if (href === '#') {
+                    e.preventDefault();
+                    
+                    // ナビゲーションのマッピング
+                    const navMapping = {
+                        'トップ': 'top',
+                        'ニュース': 'news',
+                        'メール': 'mail',
+                        'オークション': 'auction',
+                        'ショッピング': 'shopping',
+                        '地図': 'map',
+                        '路線情報': 'transit',
+                        '天気': 'weather',
+                        'テレビ': 'tv',
+                        'グルメ': 'gourmet',
+                        'ブログ': 'blog',
+                        '掲示板': 'bbs',
+                        'ゲーム': 'games',
+                        '占い': 'fortune'
+                    };
+                    
+                    const pageName = navMapping[e.target.textContent] || e.target.textContent.toLowerCase();
+                    showPage(pageName);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
